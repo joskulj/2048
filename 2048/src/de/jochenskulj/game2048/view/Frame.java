@@ -24,6 +24,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,12 +40,14 @@ public class Frame extends JFrame implements KeyListener {
 
 	private TilePanel tilePanel;
 	private ScorePanel scorePanel;
+	private HashMap<Integer,Integer> keyMap;
 	
 	/**
 	 * creates an instance
 	 */
 	public Frame() {
 		initComponents();
+		keyMap = initKeyMap();
 		setIconImage(Application.getImage(10));
 		setTitle("2048");
 		setSize(new Dimension(570, 630));	
@@ -65,22 +68,9 @@ public class Frame extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent anEvent) {
 		int keyCode = anEvent.getKeyCode();
-		if (keyCode == KeyEvent.VK_DOWN) {
-			tilePanel.getModel().move(BoardModel.DOWN);
-		}
-		if (keyCode == KeyEvent.VK_UP) {
-			tilePanel.getModel().move(BoardModel.UP);
-		}
-		if (keyCode == KeyEvent.VK_LEFT) {
-			tilePanel.getModel().move(BoardModel.LEFT);
-		}
-		if (keyCode == KeyEvent.VK_RIGHT) {
-			tilePanel.getModel().move(BoardModel.RIGHT);
-		}
-		
-		// For testing only
-		if (keyCode == KeyEvent.VK_SPACE) {
-			tilePanel.getModel().newTile();
+		if (keyMap.keySet().contains(keyCode)) {
+			int direction = keyMap.get(keyCode);
+			tilePanel.getModel().move(direction);
 		}
 	}
 
@@ -97,7 +87,7 @@ public class Frame extends JFrame implements KeyListener {
 
 	
 	/**
-	 * inits the components of the frame
+	 * initializes the components of the frame
 	 */
 	protected void initComponents() {
 		tilePanel = new TilePanel();
@@ -126,5 +116,18 @@ public class Frame extends JFrame implements KeyListener {
 		add(tilePanel, c);
 		
 		addKeyListener(this);
+	}
+	
+	/**
+	 * initializes the key map
+	 * @return Hashmap that maps keycodes to moving directions
+	 */
+	protected HashMap<Integer,Integer> initKeyMap() {
+		HashMap<Integer,Integer> result = new HashMap<Integer,Integer>();
+		result.put(KeyEvent.VK_UP, BoardModel.UP);
+		result.put(KeyEvent.VK_DOWN, BoardModel.DOWN);
+		result.put(KeyEvent.VK_LEFT, BoardModel.LEFT);
+		result.put(KeyEvent.VK_RIGHT, BoardModel.RIGHT);
+		return result;
 	}
 }
