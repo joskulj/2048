@@ -27,6 +27,7 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.jochenskulj.game2048.Application;
@@ -71,6 +72,15 @@ public class Frame extends JFrame implements KeyListener {
 		if (keyMap.keySet().contains(keyCode)) {
 			int direction = keyMap.get(keyCode);
 			tilePanel.getModel().move(direction);
+			if (tilePanel.getModel().isWon()) {
+				JOptionPane.showMessageDialog(this, 
+						"Yeah, you won the game!!!");
+			}
+			if (tilePanel.getModel().isLost()) {
+				System.out.print("GAME OVER.");
+				JOptionPane.showMessageDialog(this, 
+						"GAME OVER! Sorry, you lost the game.");
+			}
 		}
 	}
 
