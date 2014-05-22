@@ -79,6 +79,35 @@ public class BoardModel {
 	}
 	
 	/**
+	 * checks if the game is won
+	 * @return <code>true</code> if the game is won; otherwise
+	 *         <code>false</code>
+	 */
+	public boolean isWon() {
+		return false;
+	}
+
+	/**
+	 * checks if the game is lost
+	 * @return <code>true</code> if the game is lost; otherwise
+	 *         <code>false</code>
+	 */
+	public boolean isLost() {
+		boolean emptyTile = false;
+		int possibleMoves = 0;
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				if (values[x][y] == 0) {
+					emptyTile = true;
+				}
+			}
+			possibleMoves += moveRow(LEFT, x, false);
+			possibleMoves += moveRow(DOWN, x, false);
+		}
+		return (possibleMoves == 0 && emptyTile == false);
+	}
+	
+	/**
 	 * returns the positions of free fields
 	 * @return ArrayList of free positions
 	 */
@@ -116,7 +145,7 @@ public class BoardModel {
 	public void move(int aDirection) {
 		int count = 0;
 		for (int i = 0; i < Application.MAX_TILES; i++) {
-			count += moveRow(aDirection, i);
+			count += moveRow(aDirection, i, true);
 		}
 		if (count > 0) {
 			newTile();
@@ -155,9 +184,11 @@ public class BoardModel {
 	 *        direction to move
 	 * @param aRowIndex
 	 *        index of the row to moves
+	 * @param moveFlag
+	 *        indicates, if the tiles should actually move
 	 * @return count of the tile moves
 	 */
-	protected int moveRow(int aDirection, int aRowIndex) {
+	protected int moveRow(int aDirection, int aRowIndex, boolean moveFlag) {
 		int result = 0;
 		BoardPosition current = startPositions.get(aDirection).cloneInstance();
 		current.setRow(aRowIndex);
@@ -170,21 +201,25 @@ public class BoardModel {
 			int nextValue = next.getValue(values);
 			if (currentValue == 0) {
 				if (nextValue > 0) {
-					current.setValue(values, nextValue);
-					nextTile = false;
-					next.setValue(values, 0);
+					if (moveFlag) {
+						current.setValue(values, nextValue);
+						next.setValue(values, 0);
+						nextTile = false;
+					}	
 					result += 1;
 				}
 			} else {
 				if (currentValue == nextValue) {
 					int newValue = currentValue + 1;
-					current.setValue(values, newValue);
-					next.setValue(values, 0);
-					score += Math.pow(2, newValue);
+					if (moveFlag) {
+						current.setValue(values, newValue);
+						next.setValue(values, 0);
+						score += Math.pow(2, newValue);
+					}
 					result += 1;
 				}
 			}
-			if (nextTile) {
+			if (nextTile == true) {
 				current.nextTile();
 			}
 		}
