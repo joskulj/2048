@@ -84,7 +84,15 @@ public class BoardModel {
 	 *         <code>false</code>
 	 */
 	public boolean isWon() {
-		return false;
+		boolean result = false;
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				if (values[x][y] == Application.MAX_VALUE - 1) {
+					result = true;
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
