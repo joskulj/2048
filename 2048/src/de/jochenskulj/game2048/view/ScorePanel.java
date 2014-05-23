@@ -34,18 +34,24 @@ import de.jochenskulj.game2048.model.BoardModelListener;
  */
 public class ScorePanel extends JPanel implements BoardModelListener {
 
+	private Frame frame;
 	private BoardModel model;
 	private JLabel scoreLabel;
+	private NewButton newButton;
 	
 	/**
 	 * creates an instance
+	 * @param aFrame
+	 *        the parent frame
 	 * @param aModel
+	 *        model of the game
 	 * 
 	 */
-	public ScorePanel(BoardModel aModel) {
-		initComponents();
+	public ScorePanel(Frame aFrame, BoardModel aModel) {
+		frame = aFrame;
 		model = aModel;
 		model.addListener(this);
+		initComponents();
 	}
 	
 	/**
@@ -60,6 +66,7 @@ public class ScorePanel extends JPanel implements BoardModelListener {
 	 * initializes the components
 	 */
 	protected void initComponents() {
+		newButton = new NewButton(frame, model);
 		scoreLabel = new JLabel();
 		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -67,6 +74,16 @@ public class ScorePanel extends JPanel implements BoardModelListener {
 		
 		GridBagConstraints c = new GridBagConstraints();
 	    c.gridx = 0;
+	    c.gridy = 0;
+	    c.weighty = 10;
+	    c.weightx = 5;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.anchor = GridBagConstraints.NORTHWEST;
+	    c.insets = new Insets(5, 5, 5, 5);
+		add(newButton, c);
+		
+		c = new GridBagConstraints();
+	    c.gridx = 1;
 	    c.gridy = 0;
 	    c.weighty = 10;
 	    c.weightx = 5;

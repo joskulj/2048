@@ -51,7 +51,7 @@ public class Frame extends JFrame implements KeyListener {
 		keyMap = initKeyMap();
 		setIconImage(Application.getImage(10));
 		setTitle("2048");
-		setSize(new Dimension(570, 630));	
+		setSize(new Dimension(570, 650));	
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Frame extends JFrame implements KeyListener {
 	 */
 	protected void initComponents() {
 		tilePanel = new TilePanel();
-		scorePanel = new ScorePanel(tilePanel.getModel());
+		scorePanel = new ScorePanel(this, tilePanel.getModel());
 		
 		setLayout(new GridBagLayout());
 		
@@ -124,6 +124,7 @@ public class Frame extends JFrame implements KeyListener {
 	    c.anchor = GridBagConstraints.NORTHWEST;
 	    c.insets = new Insets(5, 5, 5, 5);
 		add(tilePanel, c);
+		tilePanel.requestFocus();
 		
 		addKeyListener(this);
 	}

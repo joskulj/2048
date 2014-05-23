@@ -144,6 +144,19 @@ public class BoardModel {
 		randomPosition.setValue(values, newValue);
 		fireUpdate();
 	}
+
+	/**
+	 * starts a new game
+	 */
+	public void newGame() {
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				values[x][y] = 0;
+			}
+		}
+		score = 0;
+		newTile();
+	}
 	
 	/**
 	 * makes a move
