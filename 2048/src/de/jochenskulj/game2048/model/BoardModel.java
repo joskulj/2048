@@ -156,6 +156,7 @@ public class BoardModel {
 		}
 		score = 0;
 		newTile();
+		newTile();
 	}
 	
 	/**
