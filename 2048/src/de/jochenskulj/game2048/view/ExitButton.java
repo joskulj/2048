@@ -20,37 +20,29 @@ package de.jochenskulj.game2048.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 import de.jochenskulj.game2048.model.BoardModel;
 
 /**
- * Button to start a new Game
+ * Button to exit the Game
  */
-public class NewButton extends JButton implements ActionListener {
-	
-	private BoardModel model;
+public class ExitButton extends JButton implements ActionListener {
 
 	/**
 	 * creates a new instance
 	 * @param aFrame
 	 *        parent that handles the key events
-	 * @param aModel
-	 *        model to use
 	 */
-	public NewButton(Frame aFrame, BoardModel aModel) {
-		model = aModel;
-		setText("New Game");
+	public ExitButton(Frame aFrame) {
+		setText("Exit Game");
 		addKeyListener(aFrame);
 		addActionListener(this);
 	}
-	
+
 	@Override
-    public void actionPerformed(ActionEvent arg0) {
-        model.newGame();
-    }
+	public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	}
 }

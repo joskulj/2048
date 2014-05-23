@@ -38,6 +38,7 @@ public class ScorePanel extends JPanel implements BoardModelListener {
 	private BoardModel model;
 	private JLabel scoreLabel;
 	private NewButton newButton;
+	private ExitButton exitButton;
 	
 	/**
 	 * creates an instance
@@ -67,6 +68,7 @@ public class ScorePanel extends JPanel implements BoardModelListener {
 	 */
 	protected void initComponents() {
 		newButton = new NewButton(frame, model);
+		exitButton = new ExitButton(frame);
 		scoreLabel = new JLabel();
 		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -86,10 +88,20 @@ public class ScorePanel extends JPanel implements BoardModelListener {
 	    c.gridx = 1;
 	    c.gridy = 0;
 	    c.weighty = 10;
-	    c.weightx = 5;
+	    c.weightx = 30;
 	    c.fill = GridBagConstraints.HORIZONTAL;
 	    c.anchor = GridBagConstraints.NORTHWEST;
 	    c.insets = new Insets(5, 5, 5, 5);
 		add(scoreLabel, c);
+		
+		c = new GridBagConstraints();
+	    c.gridx = 2;
+	    c.gridy = 0;
+	    c.weighty = 10;
+	    c.weightx = 5;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.anchor = GridBagConstraints.NORTHWEST;
+	    c.insets = new Insets(5, 5, 5, 5);
+		add(exitButton, c);
 	}
 }
