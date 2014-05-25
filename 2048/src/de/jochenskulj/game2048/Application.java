@@ -60,11 +60,10 @@ public class Application {
 	public static BufferedImage getImage(int aValue) {
 		BufferedImage result = null;
 		try {
-			StringBuffer filepathBuffer = new StringBuffer();
-			filepathBuffer.append(System.getProperty("user.dir"));
-			filepathBuffer.append("/pictures/");
-			filepathBuffer.append(ICON_NAME[aValue]);
-			result = ImageIO.read(new File(filepathBuffer.toString()));
+			File userDir = new File(System.getProperty("user.dir"));
+			File picturesDir = new File(userDir, "pictures");
+			File imageFile = new File(picturesDir, ICON_NAME[aValue]);
+			result = ImageIO.read(imageFile);
 		} catch(IOException e) {
 			System.err.println("Unable to load tile image.");
 		}
